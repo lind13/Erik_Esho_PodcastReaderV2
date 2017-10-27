@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
 using System.Diagnostics;
+using System.Net;
 
 namespace ProjektPodcast2
 {
@@ -26,7 +27,6 @@ namespace ProjektPodcast2
         public Form1()
         {
             InitializeComponent();
-
 
         }
 
@@ -120,7 +120,7 @@ namespace ProjektPodcast2
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
+        { 
             if(listBox1.SelectedItem != null)
             {
                 Data.Episode episode = listBox1.SelectedItem as Data.Episode;
@@ -176,6 +176,32 @@ Datum: " + modDate + @"
 
 
             }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Data.Episode episodeLink = listBox1.SelectedItem as Data.Episode;
+            var valdLink = episodeLink.Link;
+            Data.Episode titel = listBox1.SelectedItem as Data.Episode;
+            var namn = titel.EpisodeName;
+            string fileLocation = @"C:\Users\Esho\Desktop\" + namn + ".mp3";
+            using(var client = new WebClient())
+            {
+                client.DownloadFile(valdLink, fileLocation);
+                MessageBox.Show("Filen har laddats ner");
+            }
+
+
+        }
+
+      
+
+        private void axWindowsMediaPlayer1_Enter(object sender, EventArgs e)
+        {
+            Data.Episode titel = listBox1.SelectedItem as Data.Episode;
+            var namn = titel.EpisodeName;
+            string fileLocation = @"C:\Users\Esho\Desktop\" + namn + ".mp3";
+            axWindowsMediaPlayer1.URL = fileLocation;
         }
     }
 }
