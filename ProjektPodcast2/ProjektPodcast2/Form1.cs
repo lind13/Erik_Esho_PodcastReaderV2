@@ -43,7 +43,7 @@ namespace ProjektPodcast2
         private async void listBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
 
-            try
+            if(listBox2.SelectedItem != null)
             {
                 Data.Podcast selectedItem = listBox2.SelectedItem as Data.Podcast;
                 string url = selectedItem.Url;
@@ -59,13 +59,7 @@ namespace ProjektPodcast2
                 label1.Text = "";
 
             }
-            catch (Exception)
-            {
-
-
-
-
-            }
+         
 
 
         }
@@ -76,17 +70,27 @@ namespace ProjektPodcast2
 
             try
             {
-                if (Validator.ValidateIfStringNotNull(textBox1.Text) && Validator.ValidateUrl(textBox1.Text) && Validator.ValidateIfStringNotNull(textBox2.Text) && Validator.ValidateIfStringNotNull(textBox3.Text))
+                if (Validator.ValidateIfStringNotNull(textBox1.Text) && Validator.ValidateIfStringNotNull(textBox2.Text) && Validator.ValidateIfStringNotNull(textBox3.Text) && Validator.ValidateUrl(textBox1.Text))
                 {
+                    bool exists = categoryList.Any(item => item.CategoryName == textBox2.Text);
 
+                    if (exists)
+                    {
+                        Data.Category category = categoryList.Find(item => item.CategoryName.Equals(textBox2.Text));
+                        var NewPodcast = new Data.Podcast() { Title = textBox3.Text, PodcastCategory = category, Url = textBox1.Text };
+                        podcastList.Add(NewPodcast);
+                    }
 
-                    var NewCategory = new Data.Category() { CategoryName = textBox2.Text };
+                    else
+                    {
+                        var NewCategory = new Data.Category() { CategoryName = textBox2.Text };
 
-                    var NewPodcast = new Data.Podcast() { Title = textBox3.Text, PodcastCategory = NewCategory, Url = textBox1.Text };
+                        var NewPodcastWithNewCategory = new Data.Podcast() { Title = textBox3.Text, PodcastCategory = NewCategory, Url = textBox1.Text };
 
-
-                    podcastList.Add(NewPodcast);
-                    categoryList.Add(NewCategory);
+                        podcastList.Add(NewPodcastWithNewCategory);
+                        categoryList.Add(NewCategory);
+                    }
+                                        
 
                     textBox1.Clear();
                     textBox2.Clear();
