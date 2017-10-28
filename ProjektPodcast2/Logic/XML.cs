@@ -12,7 +12,7 @@ namespace Logic
 {
     class XML
     {
-        var path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "//SerializationOverview.xml";
+        
 
         public void Main(string[] args)
         {
@@ -21,6 +21,7 @@ namespace Logic
 
         public void Serializer(object o)
         {
+            var path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "//SerializationOverview.xml";
             XmlSerializer toXML = new XmlSerializer(o.GetType());
             TextWriter textWriter = new StreamWriter(path);
             Data.Category category = new Data.Category();
@@ -35,7 +36,7 @@ namespace Logic
 
         public void Deserialize(object o)
         {
-            
+            var path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "//SerializationOverview.xml";
             XmlSerializer fromXML = null;
             FileStream fs = new FileStream(path, FileMode.Open);
             fromXML.Deserialize(fs);
@@ -43,5 +44,5 @@ namespace Logic
         }                   
     }
     }
-}
+
 
