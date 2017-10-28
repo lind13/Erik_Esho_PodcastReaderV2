@@ -178,20 +178,34 @@ Datum: " + modDate + @"
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private async void button2_Click(object sender, EventArgs e)
         {
-            Data.Episode episodeLink = listBox1.SelectedItem as Data.Episode;
-            var valdLink = episodeLink.Link;
-            Data.Episode titel = listBox1.SelectedItem as Data.Episode;
-            var namn = titel.EpisodeName;
-            string fileLocation = @"C:\Users\Esho\Desktop\" + namn + ".mp3";
-            using(var client = new WebClient())
+            try
             {
-                client.DownloadFile(valdLink, fileLocation);
-                MessageBox.Show("Filen har laddats ner");
+
+                
+
+                    Data.Episode episodeLink = listBox1.SelectedItem as Data.Episode;
+                    var valdMp3Link = episodeLink.Mp3Link;
+                    Data.Episode titel = listBox1.SelectedItem as Data.Episode;
+                    var namn = titel.EpisodeName;
+                    string fileLocation = Environment.CurrentDirectory + namn + ".mp3";
+
+
+                using (var client = new WebClient())
+                {                    
+                        label1.Text = "Filen laddas ner...";
+                        await Task.Run(() => client.DownloadFile(valdMp3Link, fileLocation));
+                        MessageBox.Show("Avsnitt: " + namn + " har laddats ner");
+                }
+
+            }    
+            catch 
+            {
+                    MessageBox.Show("Filen kunde inte laddas ner");
             }
 
-
+            label1.Text = "";
         }
 
       
@@ -200,7 +214,7 @@ Datum: " + modDate + @"
         {
             Data.Episode titel = listBox1.SelectedItem as Data.Episode;
             var namn = titel.EpisodeName;
-            string fileLocation = @"C:\Users\Esho\Desktop\" + namn + ".mp3";
+            string fileLocation = Environment.CurrentDirectory + namn + ".mp3";
             axWindowsMediaPlayer1.URL = fileLocation;
         }
     }

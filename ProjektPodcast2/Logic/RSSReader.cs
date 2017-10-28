@@ -35,7 +35,8 @@ namespace Logic
                 var date = item.SelectSingleNode("pubDate").InnerText;
                 var link = item.SelectSingleNode("link").InnerText;
                 var info = item.SelectSingleNode("description").InnerText;
-                var feedItem = new Data.Episode() {EpisodeName = title, PubDate = date, Link = link, Info = info };
+                var mp3file = item.SelectSingleNode("enclosure/@url").InnerXml;
+                var feedItem = new Data.Episode() { EpisodeName = title, PubDate = date, Link = link, Info = info, Mp3Link = mp3file};
 
                 feedOfPodcasts.Add(feedItem);
 

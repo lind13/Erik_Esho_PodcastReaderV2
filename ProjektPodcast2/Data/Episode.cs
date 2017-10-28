@@ -12,6 +12,7 @@ namespace Data
         public string PubDate { get; set; }
         public string Link { get; set; }
         public string Info { get; set; }
+        public string Mp3Link { get; set; }
       
     }
 
