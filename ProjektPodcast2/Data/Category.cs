@@ -9,11 +9,12 @@ using System.IO;
 
 namespace Data
 {
-    public class Category
+        
+    public class  Category
     {
-        [XmlElement ("Category Name")]
+        [XmlElement ("Genre")]
         public string CategoryName { get; set; }
-        [XmlArray ("List of Pods")]
+        [XmlArray ("Podcastlista"), XmlArrayItem(typeof(Podcast))]
         public List<Podcast> PodList { get; set; }
     }
 }
