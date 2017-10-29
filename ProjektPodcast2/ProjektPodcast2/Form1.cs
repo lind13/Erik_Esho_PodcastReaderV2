@@ -42,11 +42,15 @@ namespace ProjektPodcast2
 
         private async void listBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(listBox2.SelectedItem != null)
+
+            if (listBox2.SelectedItem != null)
             {
                 Data.Podcast selectedItem = listBox2.SelectedItem as Data.Podcast;
                 string url = selectedItem.Url;
                 label1.Text = "Ett ögonblick, avsnitt håller på att läsas in...";                              
+
+
+
 
                 var episodeList = await RSSReader.GetEpisodes(url);
                 listBox1.DataSource = null;
@@ -54,6 +58,9 @@ namespace ProjektPodcast2
                 listBox1.DisplayMember = "EpisodeName";
                 label1.Text = "";
             }
+
+
+
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -80,7 +87,8 @@ namespace ProjektPodcast2
                         podcastList.Add(NewPodcastWithNewCategory);
                         categoryList.Add(NewCategory);
                     }
-                                        
+
+
                     textBox1.Clear();
                     textBox2.Clear();
                     textBox3.Clear();
