@@ -40,6 +40,8 @@
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.button2 = new System.Windows.Forms.Button();
             this.axWindowsMediaPlayer1 = new AxWMPLib.AxWindowsMediaPlayer();
+            this.deserializebtn = new System.Windows.Forms.Button();
+            this.serializebtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.axWindowsMediaPlayer1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -151,11 +153,32 @@
             this.axWindowsMediaPlayer1.TabIndex = 10;
             this.axWindowsMediaPlayer1.Enter += new System.EventHandler(this.axWindowsMediaPlayer1_Enter);
             // 
+            // deserializebtn
+            // 
+            this.deserializebtn.Location = new System.Drawing.Point(706, 243);
+            this.deserializebtn.Name = "deserializebtn";
+            this.deserializebtn.Size = new System.Drawing.Size(75, 23);
+            this.deserializebtn.TabIndex = 12;
+            this.deserializebtn.Text = "deserialize";
+            this.deserializebtn.UseVisualStyleBackColor = true;
+            // 
+            // serializebtn
+            // 
+            this.serializebtn.Location = new System.Drawing.Point(622, 243);
+            this.serializebtn.Name = "serializebtn";
+            this.serializebtn.Size = new System.Drawing.Size(75, 23);
+            this.serializebtn.TabIndex = 13;
+            this.serializebtn.Text = "serialize";
+            this.serializebtn.UseVisualStyleBackColor = true;
+            this.serializebtn.Click += new System.EventHandler(this.serializebtn_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1016, 401);
+            this.Controls.Add(this.serializebtn);
+            this.Controls.Add(this.deserializebtn);
             this.Controls.Add(this.axWindowsMediaPlayer1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.richTextBox1);
@@ -190,6 +213,8 @@
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.Button button2;
         private AxWMPLib.AxWindowsMediaPlayer axWindowsMediaPlayer1;
+        private System.Windows.Forms.Button deserializebtn;
+        private System.Windows.Forms.Button serializebtn;
     }
 }
 

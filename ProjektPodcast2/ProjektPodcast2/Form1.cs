@@ -17,17 +17,17 @@ namespace ProjektPodcast2
     {
         private List<Data.Podcast> podcastList = new List<Data.Podcast>();
         private List<Data.Category> categoryList = new List<Data.Category>();
+        
+        //private Data.Category category = new Data.Category();
+        //private List<Data.Episode> episodeList = new List<Data.Episode>();
+        //private Data.Podcast podcast = new Data.Podcast();
         private Logic.RSSReader RSSReader = new Logic.RSSReader();
         private Logic.Validator Validator = new Logic.Validator();
         public Process p = new Process();
 
-
-
-
         public Form1()
         {
             InitializeComponent();
-
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -42,36 +42,27 @@ namespace ProjektPodcast2
 
         private async void listBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
-
             if(listBox2.SelectedItem != null)
             {
                 Data.Podcast selectedItem = listBox2.SelectedItem as Data.Podcast;
                 string url = selectedItem.Url;
-                label1.Text = "Ett ögonblick, avsnitt håller på att läsas in...";
-
-
-                              
+                label1.Text = "Ett ögonblick, avsnitt håller på att läsas in...";                              
 
                 var episodeList = await RSSReader.GetEpisodes(url);
                 listBox1.DataSource = null;
                 listBox1.DataSource = episodeList;
                 listBox1.DisplayMember = "EpisodeName";
                 label1.Text = "";
-
             }
-         
-
-
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-
-
             try
             {
                 if (Validator.ValidateIfStringNotNull(textBox1.Text) && Validator.ValidateIfStringNotNull(textBox2.Text) && Validator.ValidateIfStringNotNull(textBox3.Text) && Validator.ValidateUrl(textBox1.Text))
                 {
+
                     bool exists = categoryList.Any(item => item.CategoryName == textBox2.Text);
 
                     if (exists)
@@ -80,7 +71,6 @@ namespace ProjektPodcast2
                         var NewPodcast = new Data.Podcast() { Title = textBox3.Text, PodcastCategory = category, Url = textBox1.Text };
                         podcastList.Add(NewPodcast);
                     }
-
                     else
                     {
                         var NewCategory = new Data.Category() { CategoryName = textBox2.Text };
@@ -91,23 +81,17 @@ namespace ProjektPodcast2
                         categoryList.Add(NewCategory);
                     }
                                         
-
                     textBox1.Clear();
                     textBox2.Clear();
                     textBox3.Clear();
 
-
                     uppDateComboBox();
                 }
-
-
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
-
-
         }
 
         private void uppDateComboBox()
@@ -216,6 +200,22 @@ Datum: " + modDate + @"
             var namn = titel.EpisodeName;
             string fileLocation = Environment.CurrentDirectory + namn + ".mp3";
             axWindowsMediaPlayer1.URL = fileLocation;
+        }
+
+        private void serializebtn_Click(object sender, EventArgs e)
+        {
+            Logic.XML serializer = new Logic.XML();
+
+            //foreach (Data.Podcast dataPod in podcastList)
+            //{
+            //    Console.WriteLine(dataPod);
+            //    //serializer.Serialize(dataPod.Title);    // Title ==> "Name"
+            //}
+            serializer.Serialize(podcastList);
+            //serializer.Serialize(categoryList);   // Seems that it writes over previous serrialization
+            //serializer.Serialize(category);
+            //serializer.Serialize(episodeList);
+            //serializer.Serialize(podcast
         }
     }
 }

@@ -10,33 +10,44 @@ using System.IO.IsolatedStorage;
 
 namespace Logic
 {
-    class XML
+    public class XML
     {
-        
-
         public void Main(string[] args)
         {
-           
+            
         }
 
-        public void Serializer(object o)
+        public void Serialize(object o)
         {
-            var path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "//SerializationOverview.xml";
-            XmlSerializer toXML = new XmlSerializer(o.GetType());
-            TextWriter textWriter = new StreamWriter(path);
-            Data.Category category = new Data.Category();
-            Data.Episode episode = new Data.Episode();
-            Data.Podcast podcast = new Data.Podcast();
-            FileStream file = File.Create(path);
-            toXML.Serialize(file, o);
-            
-
-            
+            string path = @"C:\Users\esho9\Desktop\test.xml";
+         
+            if (File.Exists(path))
+            {
+                using (FileStream file = File.Create(path))
+                {
+                    XmlSerializer toXML = new XmlSerializer(o.GetType());
+                    toXML.Serialize(file, o);
+                }
+            }
+            else
+            {
+                using (FileStream file = File.Create(path))
+                {
+                    XmlSerializer toXML = new XmlSerializer(o.GetType());
+                    //TextWriter textWriter = new StreamWriter(path);
+                    toXML.Serialize(file, o);
+                }
+            }
+                        
+            //Data.Category category = new Data.Category();
+            //Data.Episode episode = new Data.Episode();
+            //Data.Podcast podcast = new Data.Podcast();
         }
 
         public void Deserialize(object o)
         {
-            var path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "//SerializationOverview.xml";
+            //var path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "//SerializationOverview.xml";
+            string path = @"C:\Users\esho9\Desktop\test.xml";
             XmlSerializer fromXML = null;
             FileStream fs = new FileStream(path, FileMode.Open);
             fromXML.Deserialize(fs);
