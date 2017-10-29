@@ -100,12 +100,12 @@ namespace ProjektPodcast2
             comboBox1.DataSource = categoryList;
             comboBox1.DisplayMember = "CategoryName";
 
-       
+
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
-        { 
-            if(listBox1.SelectedItem != null)
+        {
+            if (listBox1.SelectedItem != null)
             {
                 Data.Episode episode = listBox1.SelectedItem as Data.Episode;
                 string info = episode.Info;
@@ -114,7 +114,7 @@ namespace ProjektPodcast2
                 string modDate = dateAsDateTime.ToString("yyyy-MM-dd");
                 string link = episode.Link;
 
-                
+
 
                 richTextBox1.Text = info + @"
 
@@ -126,7 +126,7 @@ Datum: " + modDate + @"
 
 
             }
-           
+
         }
 
 
@@ -144,7 +144,7 @@ Datum: " + modDate + @"
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+
 
             if (comboBox1.SelectedItem != null)
             {
@@ -167,32 +167,32 @@ Datum: " + modDate + @"
             try
             {
 
-                
 
-                    Data.Episode episodeLink = listBox1.SelectedItem as Data.Episode;
-                    var valdMp3Link = episodeLink.Mp3Link;
-                    Data.Episode titel = listBox1.SelectedItem as Data.Episode;
-                    var namn = titel.EpisodeName;
-                    string fileLocation = Environment.CurrentDirectory + namn + ".mp3";
+
+                Data.Episode episodeLink = listBox1.SelectedItem as Data.Episode;
+                var valdMp3Link = episodeLink.Mp3Link;
+                Data.Episode titel = listBox1.SelectedItem as Data.Episode;
+                var namn = titel.EpisodeName;
+                string fileLocation = Environment.CurrentDirectory + namn.Replace("/", "av").Replace("&", "och").Replace(" ", "").Replace(":", "") + ".mp3";
 
 
                 using (var client = new WebClient())
-                {                    
-                        label1.Text = "Filen laddas ner...";
-                        await Task.Run(() => client.DownloadFile(valdMp3Link, fileLocation));
-                        MessageBox.Show("Avsnitt: " + namn + " har laddats ner");
+                {
+                    label1.Text = "Filen laddas ner...";
+                    await Task.Run(() => client.DownloadFile(valdMp3Link, fileLocation));
+                    MessageBox.Show("Avsnitt: " + namn + " har laddats ner");
                 }
 
-            }    
-            catch 
+            }
+            catch
             {
-                    MessageBox.Show("Filen kunde inte laddas ner");
+                MessageBox.Show("Filen kunde inte laddas ner");
             }
 
             label1.Text = "";
         }
 
-      
+
 
         private void axWindowsMediaPlayer1_Enter(object sender, EventArgs e)
         {
