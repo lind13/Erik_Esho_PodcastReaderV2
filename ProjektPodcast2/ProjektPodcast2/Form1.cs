@@ -43,14 +43,14 @@ namespace ProjektPodcast2
         private async void listBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
 
-            if(listBox2.SelectedItem != null)
+            if (listBox2.SelectedItem != null)
             {
                 Data.Podcast selectedItem = listBox2.SelectedItem as Data.Podcast;
                 string url = selectedItem.Url;
                 label1.Text = "Ett ögonblick, avsnitt håller på att läsas in...";
 
 
-                              
+
 
                 var episodeList = await RSSReader.GetEpisodes(url);
                 listBox1.DataSource = null;
@@ -59,7 +59,7 @@ namespace ProjektPodcast2
                 label1.Text = "";
 
             }
-         
+
 
 
         }
@@ -90,7 +90,7 @@ namespace ProjektPodcast2
                         podcastList.Add(NewPodcastWithNewCategory);
                         categoryList.Add(NewCategory);
                     }
-                                        
+
 
                     textBox1.Clear();
                     textBox2.Clear();
@@ -116,12 +116,12 @@ namespace ProjektPodcast2
             comboBox1.DataSource = categoryList;
             comboBox1.DisplayMember = "CategoryName";
 
-       
+
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
-        { 
-            if(listBox1.SelectedItem != null)
+        {
+            if (listBox1.SelectedItem != null)
             {
                 Data.Episode episode = listBox1.SelectedItem as Data.Episode;
                 string info = episode.Info;
@@ -130,7 +130,7 @@ namespace ProjektPodcast2
                 string modDate = dateAsDateTime.ToString("yyyy-MM-dd");
                 string link = episode.Link;
 
-                
+
 
                 richTextBox1.Text = info + @"
 
@@ -142,7 +142,7 @@ Datum: " + modDate + @"
 
 
             }
-           
+
         }
 
 
@@ -160,7 +160,7 @@ Datum: " + modDate + @"
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+
 
             if (comboBox1.SelectedItem != null)
             {
@@ -183,39 +183,49 @@ Datum: " + modDate + @"
             try
             {
 
-                
 
-                    Data.Episode episodeLink = listBox1.SelectedItem as Data.Episode;
-                    var valdMp3Link = episodeLink.Mp3Link;
-                    Data.Episode titel = listBox1.SelectedItem as Data.Episode;
-                    var namn = titel.EpisodeName;
-                    string fileLocation = Environment.CurrentDirectory + namn + ".mp3";
+
+                Data.Episode episodeLink = listBox1.SelectedItem as Data.Episode;
+                var valdMp3Link = episodeLink.Mp3Link;
+                Data.Episode titel = listBox1.SelectedItem as Data.Episode;
+                var namn = titel.EpisodeName;
+                string fileLocation = Environment.CurrentDirectory + namn.Replace("/", "av").Replace("&", "och").Replace(" ", "").Replace(":", "") + ".mp3";
 
 
                 using (var client = new WebClient())
-                {                    
-                        label1.Text = "Filen laddas ner...";
-                        await Task.Run(() => client.DownloadFile(valdMp3Link, fileLocation));
-                        MessageBox.Show("Avsnitt: " + namn + " har laddats ner");
+                {
+                    label1.Text = "Filen laddas ner...";
+                    await Task.Run(() => client.DownloadFile(valdMp3Link, fileLocation));
+                    MessageBox.Show("Avsnitt: " + namn + " har laddats ner");
                 }
 
-            }    
-            catch 
+            }
+            catch
             {
-                    MessageBox.Show("Filen kunde inte laddas ner");
+                MessageBox.Show("Filen kunde inte laddas ner");
             }
 
             label1.Text = "";
         }
 
-      
+
 
         private void axWindowsMediaPlayer1_Enter(object sender, EventArgs e)
         {
-            Data.Episode titel = listBox1.SelectedItem as Data.Episode;
-            var namn = titel.EpisodeName;
-            string fileLocation = Environment.CurrentDirectory + namn + ".mp3";
-            axWindowsMediaPlayer1.URL = fileLocation;
+            try
+            {
+                Data.Episode titel = listBox1.SelectedItem as Data.Episode;
+                var namn = titel.EpisodeName;
+                string fileLocation = Environment.CurrentDirectory + namn.Replace("/", "av").Replace("&", "och").Replace(" ", "").Replace(":", "") + ".mp3";
+                axWindowsMediaPlayer1.URL = fileLocation;
+            }
+
+            catch (Exception)
+            {
+
+                MessageBox.Show("Filen kan inte hittas...");
+            }
+
         }
-    }
+    }  
 }
