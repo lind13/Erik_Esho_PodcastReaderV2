@@ -13,23 +13,23 @@ using System.Net;
 
 namespace ProjektPodcast2
 {
-    public partial class Form1 : Form
+    public partial class Main : Form
     {
-        private List<Data.Podcast> podcastList = new List<Data.Podcast>();
-        private List<Data.Category> categoryList = new List<Data.Category>();
+        internal List<Data.Podcast> podcastList = new List<Data.Podcast>();
+        internal List<Data.Category> categoryList = new List<Data.Category>();
         
        
-        private Logic.RSSReader RSSReader = new Logic.RSSReader();
-        private Logic.Validator Validator = new Logic.Validator();
+        internal Logic.RSSReader RSSReader = new Logic.RSSReader();
+        internal Logic.Validator Validator = new Logic.Validator();
         public Process p = new Process();
         
 
-        public Form1()
+        public Main()
         {
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void Main_Load(object sender, EventArgs e)
         {
             Logic.PodcastXMLHandler deserializerPod = new Logic.PodcastXMLHandler();
             Logic.CategoryXMLHandler categoryXMLHandler = new Logic.CategoryXMLHandler();
@@ -122,9 +122,9 @@ namespace ProjektPodcast2
                     }
 
 
-                    textBox1.Clear();
-                    textBox2.Clear();
-                    textBox3.Clear();
+                    textBox1.Text = "Fyll i namn...";
+                    textBox2.Text = "Fyll i kategori...";
+                    textBox3.Text = "Fyll i RSS-länk...";
 
                     uppDateComboBox();
                 }
@@ -246,13 +246,20 @@ Datum: " + modDate + @"
 
 
 
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        private void Main_FormClosing(object sender, FormClosingEventArgs e)
         {
             Logic.PodcastXMLHandler serializer = new Logic.PodcastXMLHandler();
             Logic.CategoryXMLHandler categoryXMLHandler = new Logic.CategoryXMLHandler();
 
             serializer.Serialize(podcastList);
             categoryXMLHandler.Serialize(categoryList);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Settings settings = new Settings();
+            settings.Show();
+                    
         }
     }
 }
