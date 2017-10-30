@@ -7,6 +7,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using System.IO;
 using System.IO.IsolatedStorage;
+using Data;
 
 namespace Logic
 {
@@ -19,7 +20,7 @@ namespace Logic
 
         public void Serialize(object o)
         {
-            string path = @"C:\Users\esho9\Desktop\test.xml";
+            string path = @"C:\Users\Esho\Desktop\test.xml";
          
             if (File.Exists(path))
             {
@@ -44,14 +45,18 @@ namespace Logic
             //Data.Podcast podcast = new Data.Podcast();
         }
 
-        public void Deserialize(object o)
+        public List<Podcast> Deserialize(string path)
         {
+
             //var path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "//SerializationOverview.xml";
-            string path = @"C:\Users\esho9\Desktop\test.xml";
-            XmlSerializer fromXML = null;
-            FileStream fs = new FileStream(path, FileMode.Open);
-            fromXML.Deserialize(fs);
-            
+            //path = @"C:\Users\Esho\Desktop\test.xml";
+            XmlSerializer fromXML = new XmlSerializer(typeof(List<Podcast>));
+            FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read);
+            var obj = fromXML.Deserialize(fs);
+
+            var lista = (List<Podcast>)obj;
+
+            return lista;
         }                   
     }
     }
