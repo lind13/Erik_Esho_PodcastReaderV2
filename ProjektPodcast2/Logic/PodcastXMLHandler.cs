@@ -11,16 +11,12 @@ using Data;
 
 namespace Logic
 {
-    public class XML
-    {
-        public void Main(string[] args)
-        {
-            
-        }
+    public class PodcastXMLHandler
+    {   
 
         public void Serialize(object o)
         {
-            string path = Environment.CurrentDirectory + "test.xml";
+            string path = Environment.CurrentDirectory + "podcast.xml";
          
             if (File.Exists(path))
             {
@@ -34,26 +30,29 @@ namespace Logic
             {
                 using (FileStream file = File.Create(path))
                 {
-                    XmlSerializer toXML = new XmlSerializer(o.GetType());
-                    //TextWriter textWriter = new StreamWriter(path);
+                    XmlSerializer toXML = new XmlSerializer(o.GetType());                
                     toXML.Serialize(file, o);
                 }
-            }
-                        
-            //Data.Category category = new Data.Category();
-            //Data.Episode episode = new Data.Episode();
-            //Data.Podcast podcast = new Data.Podcast();
+            }                        
+
         }
 
         public List<Podcast> Deserialize(string path)
         {
 
-            //var path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "//SerializationOverview.xml";
-            string path = Environment.CurrentDirectory + "test.xml";
-            XmlSerializer fromXML = null;
-            FileStream fs = new FileStream(path, FileMode.Open);
-            fromXML.Deserialize(fs);
+           
+
             
+            XmlSerializer fromXML = new XmlSerializer(typeof(List<Podcast>));
+            FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read);
+            var obj = fromXML.Deserialize(fs);
+
+            var lista = (List<Podcast>)obj;
+
+            return lista;
+
+
+
         }                   
     }
     }

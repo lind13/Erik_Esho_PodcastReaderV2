@@ -18,12 +18,11 @@ namespace ProjektPodcast2
         private List<Data.Podcast> podcastList = new List<Data.Podcast>();
         private List<Data.Category> categoryList = new List<Data.Category>();
         
-        //private Data.Category category = new Data.Category();
-        //private List<Data.Episode> episodeList = new List<Data.Episode>();
-        //private Data.Podcast podcast = new Data.Podcast();
+       
         private Logic.RSSReader RSSReader = new Logic.RSSReader();
         private Logic.Validator Validator = new Logic.Validator();
         public Process p = new Process();
+        
 
         public Form1()
         {
@@ -32,7 +31,34 @@ namespace ProjektPodcast2
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            Logic.PodcastXMLHandler deserializerPod = new Logic.PodcastXMLHandler();
+            Logic.CategoryXMLHandler categoryXMLHandler = new Logic.CategoryXMLHandler();
 
+            var podcastList = deserializerPod.Deserialize(Environment.CurrentDirectory + "podcast.xml");
+            var categoryList = categoryXMLHandler.Deserialize(Environment.CurrentDirectory + "category.xml");
+
+            foreach (var item in podcastList)
+            {
+                var title = item.Title;
+                var category = item.PodcastCategory;
+                var url = item.Url;
+
+                Data.Podcast podcast = new Data.Podcast() { Title = title, PodcastCategory = category, Url = url };
+                this.podcastList.Add(podcast);
+
+
+            }
+
+            foreach (var item in categoryList)
+            {
+                var name = item.CategoryName;
+
+                Data.Category category = new Data.Category() { CategoryName = name };
+                this.categoryList.Add(category);
+            }
+
+            comboBox1.DataSource = this.categoryList;
+            comboBox1.DisplayMember = "CategoryName";
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -42,26 +68,33 @@ namespace ProjektPodcast2
 
         private async void listBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
-
-            if (listBox2.SelectedItem != null)
+            try
             {
-                Data.Podcast selectedItem = listBox2.SelectedItem as Data.Podcast;
-                string url = selectedItem.Url;
-                label1.Text = "Ett ögonblick, avsnitt håller på att läsas in...";                              
+
+                if (listBox2.SelectedItem != null)
+                {
+                    Data.Podcast selectedItem = listBox2.SelectedItem as Data.Podcast;
+                    string url = selectedItem.Url;
+                    label1.Text = "Ett ögonblick, avsnitt håller på att läsas in...";
 
 
 
 
-                var episodeList = await RSSReader.GetEpisodes(url);
-                listBox1.DataSource = null;
-                listBox1.DataSource = episodeList;
-                listBox1.DisplayMember = "EpisodeName";
-                label1.Text = "";
+                    var episodeList = await RSSReader.GetEpisodes(url);
+                    listBox1.DataSource = null;
+                    listBox1.DataSource = episodeList;
+                    listBox1.DisplayMember = "EpisodeName";
+                    label1.Text = "";
+                }
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Avsnitten kunde inte läsas in...");
+                
             }
 
-
-
-        }
+     }
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -157,10 +190,11 @@ Datum: " + modDate + @"
             if (comboBox1.SelectedItem != null)
             {
                 var category = comboBox1.SelectedItem as Data.Category;
+                string categoryName = category.CategoryName;
 
                 listBox2.DataSource = null;
                 listBox2.DataSource = podcastList
-                .Where(items => items.PodcastCategory.Equals(category))
+                .Where(items => items.PodcastCategory.CategoryName.Equals(categoryName))
                 .ToList();
                 listBox2.DisplayMember = "Title";
 
@@ -210,42 +244,15 @@ Datum: " + modDate + @"
             axWindowsMediaPlayer1.URL = fileLocation;
         }
 
-        private void serializebtn_Click(object sender, EventArgs e)
-        {
-            Logic.XML serializer = new Logic.XML();
 
-            //foreach (Data.Podcast dataPod in podcastList)
-            //{
-            //    Console.WriteLine(dataPod);
-            //    //serializer.Serialize(dataPod.Title);    // Title ==> "Name"
-            //}
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Logic.PodcastXMLHandler serializer = new Logic.PodcastXMLHandler();
+            Logic.CategoryXMLHandler categoryXMLHandler = new Logic.CategoryXMLHandler();
+
             serializer.Serialize(podcastList);
-            //serializer.Serialize(categoryList);   // Seems that it writes over previous serrialization
-            //serializer.Serialize(category);
-            //serializer.Serialize(episodeList);
-            //serializer.Serialize(podcast
-        }
-
-        private void deserializebtn_Click(object sender, EventArgs e)
-        {
-            Logic.XML deserializer = new Logic.XML();
-
-            var lista = deserializer.Deserialize(@"C:\Users\Esho\Desktop\test.xml");
-
-            foreach (var item in lista)
-            {
-                var title = item.Title;
-                var category = item.PodcastCategory;
-                var url = item.Url;
-
-                Data.Podcast podcast = new Data.Podcast() { Title = title, PodcastCategory = category, Url = url };
-                podcastList.Add(podcast);
-
-
-            }         
-
- 
-            
+            categoryXMLHandler.Serialize(categoryList);
         }
     }
 }
