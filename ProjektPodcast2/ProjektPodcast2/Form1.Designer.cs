@@ -137,7 +137,7 @@
             // button2
             // 
             this.button2.Location = new System.Drawing.Point(829, 262);
-            this.button2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button2.Margin = new System.Windows.Forms.Padding(4);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(100, 28);
             this.button2.TabIndex = 9;
@@ -149,7 +149,7 @@
             // 
             this.axWindowsMediaPlayer1.Enabled = true;
             this.axWindowsMediaPlayer1.Location = new System.Drawing.Point(622, 50);
-            this.axWindowsMediaPlayer1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.axWindowsMediaPlayer1.Margin = new System.Windows.Forms.Padding(4);
             this.axWindowsMediaPlayer1.Name = "axWindowsMediaPlayer1";
             this.axWindowsMediaPlayer1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axWindowsMediaPlayer1.OcxState")));
             this.axWindowsMediaPlayer1.Size = new System.Drawing.Size(386, 148);
@@ -158,7 +158,7 @@
             // 
             // deserializebtn
             // 
-            this.deserializebtn.Location = new System.Drawing.Point(706, 243);
+            this.deserializebtn.Location = new System.Drawing.Point(829, 329);
             this.deserializebtn.Name = "deserializebtn";
             this.deserializebtn.Size = new System.Drawing.Size(75, 23);
             this.deserializebtn.TabIndex = 12;
@@ -167,7 +167,7 @@
             // 
             // serializebtn
             // 
-            this.serializebtn.Location = new System.Drawing.Point(622, 243);
+            this.serializebtn.Location = new System.Drawing.Point(829, 300);
             this.serializebtn.Name = "serializebtn";
             this.serializebtn.Size = new System.Drawing.Size(75, 23);
             this.serializebtn.TabIndex = 13;
@@ -179,7 +179,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1016, 401);
+            this.ClientSize = new System.Drawing.Size(1353, 490);
             this.Controls.Add(this.serializebtn);
             this.Controls.Add(this.deserializebtn);
             this.Controls.Add(this.axWindowsMediaPlayer1);

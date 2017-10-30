@@ -12,15 +12,15 @@ namespace Data
     [Serializable]
     public class Episode
     {
-        [XmlElement("Episod")]
+        [XmlElement("Episode")]
         public string EpisodeName { get; set; }
-        [XmlElement("Datum")]
+        [XmlElement("Date")]
         public string PubDate { get; set; }
-        [XmlElement("Länk")]
+        [XmlElement("Link")]
         public string Link { get; set; }
         [XmlElement("Information")]
         public string Info { get; set; }
-        [XmlElement("MP3-fil")]
+        [XmlElement("MP3Link")]
         public string Mp3Link { get; set; }
     }
 

@@ -19,7 +19,7 @@ namespace Logic
 
         public void Serialize(object o)
         {
-            string path = @"C:\Users\esho9\Desktop\test.xml";
+            string path = Environment.CurrentDirectory + "test.xml";
          
             if (File.Exists(path))
             {
@@ -47,7 +47,7 @@ namespace Logic
         public void Deserialize(object o)
         {
             //var path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "//SerializationOverview.xml";
-            string path = @"C:\Users\esho9\Desktop\test.xml";
+            string path = Environment.CurrentDirectory + "test.xml";
             XmlSerializer fromXML = null;
             FileStream fs = new FileStream(path, FileMode.Open);
             fromXML.Deserialize(fs);

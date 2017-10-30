@@ -12,9 +12,9 @@ namespace Data
     [Serializable]
     public class  Category
     {
-        [XmlElement("Genre")]
+        [XmlElement("CategoryName")]
         public string CategoryName { get; set; }
-        [XmlArray ("Podcastlista"), XmlArrayItem(typeof(Podcast))]
+        [XmlArray ("PodcastList"), XmlArrayItem(typeof(Podcast))]
         public List<Podcast> PodList { get; set; }
     }
 }

@@ -206,7 +206,7 @@ Datum: " + modDate + @"
         {
             Data.Episode titel = listBox1.SelectedItem as Data.Episode;
             var namn = titel.EpisodeName;
-            string fileLocation = Environment.CurrentDirectory + namn + ".mp3";
+            string fileLocation = Environment.CurrentDirectory + namn.Replace("/", "av").Replace("&", "och").Replace(" ", "").Replace(":", "") + ".mp3";
             axWindowsMediaPlayer1.URL = fileLocation;
         }
 

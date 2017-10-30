@@ -12,13 +12,13 @@ namespace Data
     [Serializable]
     public class Podcast
     {       
-        [XmlElement("Titel")]
+        [XmlElement("Title")]
         public string Title { get; set; }
-        [XmlArray("Episodlista"), XmlArrayItem(typeof(Episode))]
+        [XmlArray("EpisodeList"), XmlArrayItem(typeof(Episode))]
         public List<Episode> EpisodeList { get; set; }
-        [XmlElement("Podcastgenre")]
+        [XmlElement("Category")]
         public Category PodcastCategory { get; set; }
-        [XmlElement("RSS-feed")]
+        [XmlElement("URL")]
         public string Url { get; set; }
     }
 }
