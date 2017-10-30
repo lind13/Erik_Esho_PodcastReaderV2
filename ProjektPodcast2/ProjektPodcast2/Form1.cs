@@ -225,5 +225,27 @@ Datum: " + modDate + @"
             //serializer.Serialize(episodeList);
             //serializer.Serialize(podcast
         }
+
+        private void deserializebtn_Click(object sender, EventArgs e)
+        {
+            Logic.XML deserializer = new Logic.XML();
+
+            var lista = deserializer.Deserialize(@"C:\Users\Esho\Desktop\test.xml");
+
+            foreach (var item in lista)
+            {
+                var title = item.Title;
+                var category = item.PodcastCategory;
+                var url = item.Url;
+
+                Data.Podcast podcast = new Data.Podcast() { Title = title, PodcastCategory = category, Url = url };
+                podcastList.Add(podcast);
+
+
+            }         
+
+ 
+            
+        }
     }
 }

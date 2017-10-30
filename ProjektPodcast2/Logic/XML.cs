@@ -7,6 +7,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using System.IO;
 using System.IO.IsolatedStorage;
+using Data;
 
 namespace Logic
 {
@@ -44,8 +45,9 @@ namespace Logic
             //Data.Podcast podcast = new Data.Podcast();
         }
 
-        public void Deserialize(object o)
+        public List<Podcast> Deserialize(string path)
         {
+
             //var path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "//SerializationOverview.xml";
             string path = Environment.CurrentDirectory + "test.xml";
             XmlSerializer fromXML = null;
